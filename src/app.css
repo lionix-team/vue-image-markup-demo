@@ -1,0 +1,80 @@
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.editor{
+    display: flex;
+    justify-content: space-between;
+}
+.colors{
+    display: flex;
+    flex-direction: column;
+    margin: 40px 25px 0 25px;
+    align-items: center;
+    justify-content: center;
+}
+.color-container{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 5px 0;
+}
+.editor-container{
+    display: flex;
+    flex-direction: column;
+}
+.tool{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding:2px;
+}
+.current-color{
+    border-radius: 5px;
+    min-width: 28px;
+    min-height: 28px;
+}
+.active-tool{
+    outline:1px solid #000000;
+}
+.red{
+    background-color: #e40000;
+}
+.yellow{
+    background-color: #e8eb34;
+}
+.purple{
+    background-color: #a834eb;
+}
+.green{
+    background-color: #65c31a;
+}
+.lightblue{
+    background-color: #34b7eb;
+}
+.pink{
+    background-color: #eb34df;
+}
+.blue{
+    background-color: #1a10ad;
+}
+.black{
+    background-color: #000000;
+}
+.upload-image{
+    max-width: 30px;
+}
+.custom-editor{
+    margin-top: 20px;
+}
+canvas{
+
+    border: 1px solid #00000021;
+}
