@@ -40,6 +40,11 @@
         <div class="tool clear" @click="clear">
           <img src="./assets/clear.png" alt="clear">
         </div>
+        <div class="tool crop">
+          <img src="./assets/done.png" alt="done" @click="applyCropping()" v-if="currentActiveMethod === 'crop'">
+          <img src="./assets/crop.png" alt="crop" v-else  @click="setTool('crop')">
+          
+        </div>
       </div>
       <Editor :canvasWidth="canvasWidth" :canvasHeight="canvasHeight" ref="editor"/>
     </div>
@@ -76,7 +81,7 @@
         default: 600
       },
       canvasHeight:{
-        default: 420
+        default: 600
       }
 
     },
@@ -86,6 +91,10 @@
       }
     },
     methods:{
+      applyCropping(){
+          this.currentActiveMethod = this.applyCropping;
+          this.$refs.editor.applyCropping();
+      },
       changeColor(colorHex){
         this.color = colorHex;
         this.$refs.editor.changeColor(colorHex);
@@ -108,12 +117,15 @@
         this.$refs.editor.uploadImage(e)
       },
       clear(){
+        this.currentActiveMethod = this.clear;
         this.$refs.editor.clear()
       },
       undo(){
+        this.currentActiveMethod = this.undo;
         this.$refs.editor.undo();
       },
       redo(){
+        this.currentActiveMethod = this.redo;
         this.$refs.editor.redo();
       }
 
