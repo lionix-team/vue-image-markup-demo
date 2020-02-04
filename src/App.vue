@@ -4,46 +4,55 @@
       <div class="editor">
 
         <div class="tool current-color" :style="{backgroundColor: color}"></div>
+        
+        <div class="tool undo" @click="undo">
+          <i class="fas fa-undo-alt fa-sm"></i>
+        </div>
+        <div class="tool redo" @click="redo">
+          <i class="fas fa-redo-alt fa-sm"></i>
+        </div>
+        <div class="tool clear" @click="clear">
+        <i class="fas fa-trash-alt fa-lg" ></i>
+        </div>
         <div class="tool free-drawing" @click="setTool('freeDrawing')" :class="{'active-tool':currentActiveMethod === 'freeDrawing'}">
-          <img src="./assets/brush.png" alt="brush">
+         <i class="fas fa-pencil-alt fa-lg"></i>
         </div>
         <div class="tool add-text" @click="setTool('text')" :class="{'active-tool':currentActiveMethod === 'text'}">
-          <img src="./assets/text.png" alt="text">
+          <i class="fas fa-font fa-lg"></i>
         </div>
         <div class="tool custom-circle" @click="setTool('circle')" :class="{'active-tool':currentActiveMethod === 'circle'}">
-          <img src="./assets/circle.png" alt="circle">
+         <i class="far fa-circle fa-lg"></i>
         </div>
         <div class="tool custom-rect" @click="setTool('rect')" :class="{'active-tool':currentActiveMethod === 'rect'}">
-          <img src="./assets/rectangle.png" alt="rect">
+          <i class="far fa-square fa-lg"></i>
         </div>
 
         <div class="tool arrow" @click="setTool('arrow')" :class="{'active-tool':currentActiveMethod === 'arrow'}">
-          <img src="./assets/arrow.png" alt="arrow">
+          <i class="fas fa-long-arrow-alt-down fa-lg"></i>
         </div>
 
         <div class="tool drag" @click="setTool('selectMode')" :class="{'active-tool':currentActiveMethod === 'selectMode'}">
-          <img src="./assets/drag.png" alt="drag">
+         <i class="fas fa-arrows-alt fa-lg"></i>
         </div>
-        <div class="tool undo" @click="undo">
-          <img src="./assets/undo.png" alt="undo">
+        
+       
+        
+        <div class="tool crop">
+          <div v-show="croppedImage"  @click="applyCropping()" >
+          <i class="far fa-check-circle fa-lg"></i>
+          </div>      
+          <div v-show="!croppedImage"  @click="cropImage()">
+           <i class="fas fa-crop-alt fa-lg"></i>
+          </div>
+         
         </div>
-        <div class="tool redo" @click="redo">
-          <img src="./assets/redo.png" alt="redo">
-        </div>
-        <div class="tool upload-image">
-          <label for="chooseImage"><img src="./assets/download.png" alt="download"></label>
+         <div class="tool upload-image">
+          <label for="chooseImage"><i class="fas fa-file-upload fa-lg"></i></label>
           <input id="chooseImage" style="visibility:hidden;" type="file" @change="uploadImage" accept="image/*">
         </div>
+        
         <div class="tool save-image" @click="saveImage">
-          <img src="./assets/save.png" alt="save" width="24" height="24">
-        </div>
-        <div class="tool clear" @click="clear">
-          <img src="./assets/clear.png" alt="clear">
-        </div>
-        <div class="tool crop">
-          <img src="./assets/done.png" alt="done" @click="applyCropping()" v-if="currentActiveMethod === 'crop'">
-          <img src="./assets/crop.png" alt="crop" v-else  @click="setTool('crop')">
-          
+         <i class="fas fa-save fa-lg"></i>
         </div>
       </div>
       <Editor :canvasWidth="canvasWidth" :canvasHeight="canvasHeight" ref="editor"/>
@@ -62,7 +71,9 @@
 </template>
 
 <script>
-  import Editor from 'vue-image-markup'
+  import Editor from 'vue-image-markup';
+  import '@fortawesome/fontawesome-free/css/all.css'
+  import '@fortawesome/fontawesome-free/js/all.js'
   export default {
     name: 'app',
     components: {
@@ -73,7 +84,8 @@
         currentActiveMethod: null,
         params: {},
         color: "black",
-        imageUrl: null
+        imageUrl: null,
+        croppedImage: false
       }
     },
     props:{
@@ -85,14 +97,27 @@
       }
 
     },
+    
     mounted(){
       if(this.imageUrl){
         this.$refs.editor.setBackgroundImage(this.imageUrl)
+        this.croppedImage = this.$refs.editor.croppedImage;
       }
+       this.$watch(
+        () => {
+            return this.$refs.editor.croppedImage
+        },
+      (cropImage) => {
+        this.croppedImage = cropImage;
+      }
+    )
     },
     methods:{
+      cropImage(){
+        this.currentActiveMethod = "crop";
+        this.setTool('crop');
+      },
       applyCropping(){
-          this.currentActiveMethod = this.applyCropping;
           this.$refs.editor.applyCropping();
       },
       changeColor(colorHex){
