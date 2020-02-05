@@ -6,10 +6,10 @@
         <div class="tool current-color" :style="{backgroundColor: color}"></div>
         
         <div class="tool undo" @click="undo">
-          <i class="fas fa-undo-alt fa-sm"></i>
+          <i class="fas fa-undo-alt fa-lg"></i>
         </div>
         <div class="tool redo" @click="redo">
-          <i class="fas fa-redo-alt fa-sm"></i>
+          <i class="fas fa-redo-alt fa-lg"></i>
         </div>
         <div class="tool clear" @click="clear">
         <i class="fas fa-trash-alt fa-lg" ></i>
@@ -34,18 +34,15 @@
         <div class="tool drag" @click="setTool('selectMode')" :class="{'active-tool':currentActiveMethod === 'selectMode'}">
          <i class="fas fa-arrows-alt fa-lg"></i>
         </div>
-        
-       
-        
-        <div class="tool crop">
-          <div v-show="croppedImage"  @click="applyCropping()" >
-          <i class="far fa-check-circle fa-lg"></i>
+ 
+        <div class="tool crop-apply" v-show="croppedImage" @click="applyCropping()" :class="{'active-tool':currentActiveMethod === 'crop'}">
+          <i class="far fa-check-circle fa-lg" ></i>
           </div>      
-          <div v-show="!croppedImage"  @click="cropImage()">
+        <div class="tool crop"  v-show="!croppedImage"  @click="cropImage()">
            <i class="fas fa-crop-alt fa-lg"></i>
-          </div>
-         
         </div>
+         
+      
          <div class="tool upload-image">
           <label for="chooseImage"><i class="fas fa-file-upload fa-lg"></i></label>
           <input id="chooseImage" style="visibility:hidden;" type="file" @change="uploadImage" accept="image/*">
@@ -104,20 +101,22 @@
         this.croppedImage = this.$refs.editor.croppedImage;
       }
        this.$watch(
-        () => {
+       () => {
             return this.$refs.editor.croppedImage
         },
-      (cropImage) => {
-        this.croppedImage = cropImage;
+      (val) => {
+        this.croppedImage = val;
       }
     )
     },
     methods:{
       cropImage(){
         this.currentActiveMethod = "crop";
+        console.log("crop")
         this.setTool('crop');
       },
       applyCropping(){
+         this.currentActiveMethod = "";
           this.$refs.editor.applyCropping();
       },
       changeColor(colorHex){
