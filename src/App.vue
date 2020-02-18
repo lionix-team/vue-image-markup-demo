@@ -37,7 +37,7 @@
  
         <div class="tool crop-apply" v-show="croppedImage" @click="applyCropping()" :class="{'active-tool':currentActiveMethod === 'crop'}">
           <i class="far fa-check-circle fa-lg" ></i>
-          </div>      
+        </div>      
         <div class="tool crop"  v-show="!croppedImage"  @click="cropImage()">
            <i class="fas fa-crop-alt fa-lg"></i>
         </div>
@@ -90,12 +90,12 @@
         default: 600
       },
       canvasHeight:{
-        default: 600
+        default: 600  
       }
-
+      
     },
     
-    mounted(){
+    mounted(){   
       if(this.imageUrl){
         this.$refs.editor.setBackgroundImage(this.imageUrl)
         this.croppedImage = this.$refs.editor.croppedImage;
@@ -106,18 +106,17 @@
         },
       (val) => {
         this.croppedImage = val;
-      }
+      }    
     )
     },
     methods:{
       cropImage(){
         this.currentActiveMethod = "crop";
-        console.log("crop")
         this.setTool('crop');
       },
       applyCropping(){
          this.currentActiveMethod = "";
-          this.$refs.editor.applyCropping();
+         this.$refs.editor.applyCropping();
       },
       changeColor(colorHex){
         this.color = colorHex;
