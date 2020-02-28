@@ -1,0 +1,44 @@
+.main {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  .editor-container {
+    display: flex;
+    flex-direction: column;
+    .editor {
+      display: flex;
+      justify-content: space-between;
+      .current-color {
+        border-radius: 5px;
+        min-width: 28px;
+        min-height: 28px;
+      }
+      .active-tool {
+        cursor: pointer;
+        color: #4287f5;
+      }
+    }
+  }
+
+  .colors {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 25px 0 25px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+.custom-editor {
+  margin-top: 20px;
+}
+
+canvas {
+    border: 1px solid #00000021;
+  }
